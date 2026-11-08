@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.WindowCompat
 
 class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
@@ -41,6 +42,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Keep app content below the status bar and above the gesture/navigation area.
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        window.statusBarColor = android.graphics.Color.rgb(7, 19, 33)
+        window.navigationBarColor = android.graphics.Color.rgb(7, 19, 33)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = false
+
         webView = WebView(this)
         setContentView(webView)
 
@@ -56,6 +64,9 @@ class MainActivity : ComponentActivity() {
             javaScriptCanOpenWindowsAutomatically = true
             setSupportMultipleWindows(false)
             cacheMode = WebSettings.LOAD_DEFAULT
+            useWideViewPort = true
+            loadWithOverviewMode = false
+            textZoom = 100
             userAgentString = userAgentString
         }
 
